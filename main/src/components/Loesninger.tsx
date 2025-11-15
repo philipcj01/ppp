@@ -16,7 +16,7 @@ const Loesninger: React.FC = () => {
   const solutions = [
     {
       id: 'process-orchestration',
-      title: 'End-to-End Process Orkestration',
+      title: 'End-to-end processorkestrering',
       subtitle: 'Komplet automatisering af pensionsprocesser',
       description: 'Intelligent procesautomatisering der forbinder alle dele af jeres pensionsworkflow. Vores AI-agenter kan håndtere dynamiske processertilpasninger i realtid.',
       icon: <Workflow size={32} />,
@@ -32,7 +32,7 @@ const Loesninger: React.FC = () => {
     },
     {
       id: 'internal-chatbot',
-      title: 'Intern Pensionsassistent',
+      title: 'Intern pensionsassistent',
       subtitle: 'AI-chatbot til medarbejdere',
       description: 'Specialiseret AI-assistent der hjælper jeres medarbejdere med pensionsspørgsmål, regelværk og komplekse beregninger.',
       icon: <Bot size={32} />,
@@ -45,6 +45,7 @@ const Loesninger: React.FC = () => {
       ],
       pricing: 'Fra 15.000 kr/md'
     },
+    /*
     {
       id: 'two-way-communication',
       title: 'To-vejs AI Kommunikation',
@@ -60,6 +61,7 @@ const Loesninger: React.FC = () => {
       ],
       pricing: 'Fra 20.000 kr/md'
     },
+    */
     /*{
       id: 'claims-decisions',
       title: 'AI Skadesbehandling',
@@ -77,9 +79,9 @@ const Loesninger: React.FC = () => {
     },*/
     {
       id: 'email-responses',
-      title: 'AI Email Assistent',
+      title: 'AI email assistent',
       subtitle: 'Automatiske email-svar',
-      description: 'Intelligent email-håndteringssystem der kan læse, forstå og besvare kundehenvendelser automatisk med passende tone og indhold.',
+      description: 'Intelligent email-håndteringssystem der kan læse, forstå og besvare kundehenvendelser automatisk med passende tone og indhold. Kan også eskalere komplekse sager til menneskelige agenter.',
       icon: <Mail size={32} />,
       features: [
         'Automatisk klassificering af henvendelser',
@@ -112,35 +114,27 @@ const Loesninger: React.FC = () => {
 
   return (
     <div className="loesninger-page">
-      <div className="hero-section">
-        <div className="hero-content">
-          <h1>AI-Automatiseringsløsninger til Pensionsbranchen</h1>
-          <p className="hero-subtitle">
-            Phinova leverer avancerede AI-automatiseringssystemer der transformerer 
-            pensionsprocesser. Vores løsninger skaber fremragende kundeoplevelser gennem 
-            intelligent automatisering af komplekse workflows og processer.
-          </p>
-        </div>
-      </div>
 
-      <div className="benefits-section">
-        <div className="container">
-          <div className="benefits-grid">
-            {benefits.map((benefit, index) => (
-              <div key={index} className="benefit-card">
-                <div className="benefit-icon">{benefit.icon}</div>
-                <h3>{benefit.title}</h3>
-                <p>{benefit.description}</p>
-              </div>
-            ))}
+      {/*
+        <div className="benefits-section">
+          <div className="container">
+            <div className="benefits-grid">
+          {benefits.map((benefit, index) => (
+            <div key={index} className="benefit-card">
+              <div className="benefit-icon">{benefit.icon}</div>
+              <h3>{benefit.title}</h3>
+              <p>{benefit.description}</p>
+            </div>
+          ))}
+            </div>
           </div>
         </div>
-      </div>
+      */}
 
       <div className="solutions-section">
         <div className="container">
           <div className="section-header">
-            <h2>Vores Automatiseringsløsninger</h2>
+            <h2>Vores automatiseringsløsninger</h2>
             <p>Vælg de AI-systemer der passer til jeres automatiseringsbehov</p>
           </div>
 
