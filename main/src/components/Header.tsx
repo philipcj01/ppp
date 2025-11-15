@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
-import { Brain, Shield, Zap, LogIn, LogOut, User } from 'lucide-react';
-import { useAuth } from '../contexts/AuthContext';
-import LoginModal from './LoginModal';
+import React, { useState } from "react";
+import { Link, useLocation } from "react-router-dom";
+import { Brain, Shield, Zap, LogIn, LogOut, User } from "lucide-react";
+import { useAuth } from "../hooks/useAuth";
+import LoginModal from "./LoginModal";
 
 const Header: React.FC = () => {
   const location = useLocation();
@@ -25,37 +25,47 @@ const Header: React.FC = () => {
               </div>
             </Link>
           </div>
-          
+
           <nav className="navigation">
-            <Link 
-              to="/" 
-              className={`nav-link ${location.pathname === '/' ? 'active' : ''}`}
+            <Link
+              to="/"
+              className={`nav-link ${
+                location.pathname === "/" ? "active" : ""
+              }`}
             >
               Start
             </Link>
             {isAuthenticated && (
-              <Link 
-                to="/sandboks" 
-                className={`nav-link ${location.pathname === '/sandboks' ? 'active' : ''}`}
+              <Link
+                to="/sandboks"
+                className={`nav-link ${
+                  location.pathname === "/sandboks" ? "active" : ""
+                }`}
               >
                 Sandboks
               </Link>
             )}
-            <Link 
-              to="/loesninger" 
-              className={`nav-link ${location.pathname === '/loesninger' ? 'active' : ''}`}
+            <Link
+              to="/loesninger"
+              className={`nav-link ${
+                location.pathname === "/loesninger" ? "active" : ""
+              }`}
             >
               Løsninger
             </Link>
-            <Link 
-              to="/om-os" 
-              className={`nav-link ${location.pathname === '/om-os' ? 'active' : ''}`}
+            <Link
+              to="/om-os"
+              className={`nav-link ${
+                location.pathname === "/om-os" ? "active" : ""
+              }`}
             >
               Om os
             </Link>
-            <Link 
-              to="/kontakt" 
-              className={`nav-link ${location.pathname === '/kontakt' ? 'active' : ''}`}
+            <Link
+              to="/kontakt"
+              className={`nav-link ${
+                location.pathname === "/kontakt" ? "active" : ""
+              }`}
             >
               Kontakt
             </Link>
@@ -80,7 +90,7 @@ const Header: React.FC = () => {
                     <User size={16} />
                     <span>{user?.name}</span>
                   </div>
-                  <button 
+                  <button
                     className="logout-button"
                     onClick={handleLogout}
                     title="Log ud"
@@ -89,7 +99,7 @@ const Header: React.FC = () => {
                   </button>
                 </div>
               ) : (
-                <button 
+                <button
                   className="login-button"
                   onClick={() => setShowLoginModal(true)}
                 >
@@ -102,9 +112,9 @@ const Header: React.FC = () => {
         </div>
       </header>
 
-      <LoginModal 
-        isOpen={showLoginModal} 
-        onClose={() => setShowLoginModal(false)} 
+      <LoginModal
+        isOpen={showLoginModal}
+        onClose={() => setShowLoginModal(false)}
       />
     </>
   );

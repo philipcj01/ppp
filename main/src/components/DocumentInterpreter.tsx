@@ -1,15 +1,27 @@
-import React, { useState } from 'react';
-import { Upload, FileText, AlertCircle, CheckCircle2, Loader2, File } from 'lucide-react';
-import BedrockService, { type DocumentSummary, type BedrockConfig } from '../services/bedrockService';
+import React, { useState } from "react";
+import {
+  Upload,
+  FileText,
+  AlertCircle,
+  CheckCircle2,
+  Loader2,
+  File,
+} from "lucide-react";
+import BedrockService, {
+  type DocumentSummary,
+  type BedrockConfig,
+} from "../services/bedrockService";
 
 const DocumentInterpreter: React.FC = () => {
-  const [documentContent, setDocumentContent] = useState<string>('');
-  const [fileName, setFileName] = useState<string>('');
+  const [documentContent, setDocumentContent] = useState<string>("");
+  const [fileName, setFileName] = useState<string>("");
   const [isAnalyzing, setIsAnalyzing] = useState<boolean>(false);
   const [analysis, setAnalysis] = useState<DocumentSummary | null>(null);
   const [error, setError] = useState<string | null>(null);
 
-  const handleFileUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileUpload = async (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
     const file = event.target.files?.[0];
     if (!file) return;
 
@@ -17,19 +29,23 @@ const DocumentInterpreter: React.FC = () => {
     setError(null);
 
     // Handle different file types
-    if (file.type === 'text/plain' || file.name.endsWith('.txt')) {
+    if (file.type === "text/plain" || file.name.endsWith(".txt")) {
       const reader = new FileReader();
       reader.onload = (e) => {
         const content = e.target?.result as string;
         setDocumentContent(content);
       };
       reader.readAsText(file);
-    } else if (file.type === 'application/pdf' || file.name.endsWith('.pdf')) {
+    } else if (file.type === "application/pdf" || file.name.endsWith(".pdf")) {
       // For now, show message about PDF support - can be enhanced with PDF parsing library
-      setError('PDF support kommer snart. Upload venligst en tekstfil eller kopier teksten manuelt.');
-    } else if (file.type.startsWith('text/') || 
-               file.name.endsWith('.eml') || 
-               file.name.endsWith('.msg')) {
+      setError(
+        "PDF support kommer snart. Upload venligst en tekstfil eller kopier teksten manuelt."
+      );
+    } else if (
+      file.type.startsWith("text/") ||
+      file.name.endsWith(".eml") ||
+      file.name.endsWith(".msg")
+    ) {
       // Handle email files and other text-based files
       const reader = new FileReader();
       reader.onload = (e) => {
@@ -38,46 +54,55 @@ const DocumentInterpreter: React.FC = () => {
       };
       reader.readAsText(file);
     } else {
-      setError('Understøttede filtyper: .txt, .pdf (kommer snart), .eml, eller kopier teksten direkte');
+      setError(
+        "Understøttede filtyper: .txt, .pdf (kommer snart), .eml, eller kopier teksten direkte"
+      );
     }
   };
 
   const analyzeDocument = async () => {
     if (!documentContent.trim()) {
-      setError('Indtast eller upload venligst dit pensionsdokument');
+      setError("Indtast eller upload venligst dit pensionsdokument");
       return;
     }
 
     const config: BedrockConfig = {
-      region: import.meta.env.VITE_AWS_REGION || 'eu-west-1',
-      accessKeyId: import.meta.env.VITE_AWS_ACCESS_KEY_ID || '',
-      secretAccessKey: import.meta.env.VITE_AWS_SECRET_ACCESS_KEY || '',
-      modelId: import.meta.env.VITE_BEDROCK_MODEL_ID || 'anthropic.claude-3-sonnet-20240229-v1:0',
+      region: import.meta.env.VITE_AWS_REGION || "eu-west-1",
+      accessKeyId: import.meta.env.VITE_AWS_ACCESS_KEY_ID || "",
+      secretAccessKey: import.meta.env.VITE_AWS_SECRET_ACCESS_KEY || "",
+      modelId:
+        import.meta.env.VITE_BEDROCK_MODEL_ID ||
+        "anthropic.claude-3-sonnet-20240229-v1:0",
     };
 
     if (!config.accessKeyId || !config.secretAccessKey) {
-      setError('AWS konfiguration mangler. Kontakt support.');
+      setError("AWS konfiguration mangler. Kontakt support.");
       return;
     }
 
     try {
       setIsAnalyzing(true);
       setError(null);
-      
+
       const bedrockService = new BedrockService(config);
-      const result = await bedrockService.interpretPensionDocument(documentContent, fileName);
-      
+      const result = await bedrockService.interpretPensionDocument(
+        documentContent,
+        fileName
+      );
+
       setAnalysis(result);
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Der opstod en fejl ved analysen');
+      setError(
+        err instanceof Error ? err.message : "Der opstod en fejl ved analysen"
+      );
     } finally {
       setIsAnalyzing(false);
     }
   };
 
   const clearDocument = () => {
-    setDocumentContent('');
-    setFileName('');
+    setDocumentContent("");
+    setFileName("");
     setAnalysis(null);
     setError(null);
   };
@@ -87,8 +112,13 @@ const DocumentInterpreter: React.FC = () => {
       <div className="interpreter-header">
         <File className="header-icon" />
         <h2>Pensionsdokument</h2>
-        <p>Upload eller indsæt dit pensionsdokument, og vores AI vil forklare det i almindelige ord</p>
-        <p className="file-types">Understøtter: Pensionsbreve, årsopgørelser, policer, e-mails og mere</p>
+        <p>
+          Upload eller indsæt dit pensionsdokument, og vores AI vil forklare det
+          i almindelige ord
+        </p>
+        <p className="file-types">
+          Understøtter: Pensionsbreve, årsopgørelser, policer, e-mails og mere
+        </p>
       </div>
 
       <div className="input-section">
@@ -102,13 +132,15 @@ const DocumentInterpreter: React.FC = () => {
             type="file"
             accept=".txt,.pdf,.eml,.msg,text/*"
             onChange={handleFileUpload}
-            style={{ display: 'none' }}
+            style={{ display: "none" }}
           />
           {fileName && (
             <div className="uploaded-file">
               <FileText size={16} />
               <span>{fileName}</span>
-              <button onClick={clearDocument} className="clear-button">×</button>
+              <button onClick={clearDocument} className="clear-button">
+                ×
+              </button>
             </div>
           )}
         </div>
@@ -124,7 +156,7 @@ const DocumentInterpreter: React.FC = () => {
           />
         </div>
 
-        <button 
+        <button
           onClick={analyzeDocument}
           disabled={isAnalyzing || !documentContent.trim()}
           className="analyze-button"
@@ -135,7 +167,7 @@ const DocumentInterpreter: React.FC = () => {
               Analyserer dokument...
             </>
           ) : (
-            'Analyser pensionsdokument'
+            "Analyser pensionsdokument"
           )}
         </button>
       </div>
@@ -153,7 +185,9 @@ const DocumentInterpreter: React.FC = () => {
             <CheckCircle2 className="success-icon" />
             <h3>Analyse resultater</h3>
             {analysis.documentType && (
-              <span className="document-type-badge">{analysis.documentType}</span>
+              <span className="document-type-badge">
+                {analysis.documentType}
+              </span>
             )}
           </div>
 
