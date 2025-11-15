@@ -1,49 +1,51 @@
-import React from 'react';
-import { 
-  Bot, 
-  MessageSquare, 
-  Workflow, 
-  FileCheck, 
-  Mail, 
-  ArrowRight, 
+import React from "react";
+import {
+  Bot,
+  MessageSquare,
+  Workflow,
+  FileCheck,
+  Mail,
+  ArrowRight,
   CheckCircle2,
   Zap,
   Shield,
-  Users
-} from 'lucide-react';
+  Users,
+} from "lucide-react";
 
 const Loesninger: React.FC = () => {
   const solutions = [
     {
-      id: 'process-orchestration',
-      title: 'End-to-end processorkestrering',
-      subtitle: 'Komplet automatisering af pensionsprocesser',
-      description: 'Intelligent procesautomatisering der forbinder alle dele af jeres pensionsworkflow. Vores AI-agenter kan håndtere dynamiske processertilpasninger i realtid.',
+      id: "process-orchestration",
+      title: "End-to-end processorkestrering",
+      subtitle: "Komplet automatisering af pensionsprocesser",
+      description:
+        "Intelligent procesautomatisering der forbinder alle dele af jeres pensionsworkflow. Vores AI-agenter kan håndtere dynamiske processertilpasninger i realtid.",
       icon: <Workflow size={32} />,
       features: [
-        'Automatisk procesidentifikation og -optimering',
-        'Dynamiske AI-agenter til komplekse beslutninger',
-        'Integration med eksisterende pensionssystemer',
-        'Real-time proces monitoring og justering',
-        'Compliance og regelefterlevelse indbygget'
+        "Automatisk procesidentifikation og -optimering",
+        "Dynamiske AI-agenter til komplekse beslutninger",
+        "Integration med eksisterende pensionssystemer",
+        "Real-time proces monitoring og justering",
+        "Compliance og regelefterlevelse indbygget",
       ],
-      pricing: 'Fra 25.000 kr/md',
-      highlight: true
+      pricing: "Fra 25.000 kr/md",
+      highlight: true,
     },
     {
-      id: 'internal-chatbot',
-      title: 'Intern pensionsassistent',
-      subtitle: 'AI-chatbot til medarbejdere',
-      description: 'Specialiseret AI-assistent der hjælper jeres medarbejdere med pensionsspørgsmål, regelværk og komplekse beregninger.',
+      id: "internal-chatbot",
+      title: "Intern pensionsassistent",
+      subtitle: "AI-chatbot til medarbejdere",
+      description:
+        "Specialiseret AI-assistent der hjælper jeres medarbejdere med pensionsspørgsmål, regelværk og komplekse beregninger.",
       icon: <Bot size={32} />,
       features: [
-        'Trænet på dansk pensionslovgivning',
-        'Integration til interne systemer og databaser',
-        'Sikker håndtering af fortrolige data',
-        'Kontinuerlig læring fra interaktioner',
-        'Multi-departement support'
+        "Trænet på dansk pensionslovgivning",
+        "Integration til interne systemer og databaser",
+        "Sikker håndtering af fortrolige data",
+        "Kontinuerlig læring fra interaktioner",
+        "Multi-departement support",
       ],
-      pricing: 'Fra 15.000 kr/md'
+      pricing: "Fra 15.000 kr/md",
     },
     /*
     {
@@ -78,43 +80,43 @@ const Loesninger: React.FC = () => {
       pricing: 'Fra 30.000 kr/md'
     },*/
     {
-      id: 'email-responses',
-      title: 'AI email assistent',
-      subtitle: 'Automatiske email-svar',
-      description: 'Intelligent email-håndteringssystem der kan læse, forstå og besvare kundehenvendelser automatisk med passende tone og indhold. Kan også eskalere komplekse sager til menneskelige agenter.',
+      id: "email-responses",
+      title: "AI email assistent",
+      subtitle: "Automatiske email-svar",
+      description:
+        "Intelligent email-håndteringssystem der kan læse, forstå og besvare kundehenvendelser automatisk med passende tone og indhold. Kan også eskalere komplekse sager til menneskelige agenter.",
       icon: <Mail size={32} />,
       features: [
-        'Automatisk klassificering af henvendelser',
-        'Kontekstuelle og personlige svar',
-        'Integration med kundesystemer',
-        'Kvalitetssikring og human-in-the-loop',
-        'Sentiment-analyse og tilpasning af tone'
+        "Automatisk klassificering af henvendelser",
+        "Kontekstuelle og personlige svar",
+        "Integration med kundesystemer",
+        "Kvalitetssikring og human-in-the-loop",
+        "Sentiment-analyse og tilpasning af tone",
       ],
-      pricing: 'Fra 18.000 kr/md'
-    }
+      pricing: "Fra 18.000 kr/md",
+    },
   ];
 
   const benefits = [
     {
       icon: <Zap size={24} />,
-      title: 'Hurtig implementering',
-      description: 'Løsninger der oftest kan implementeres på få uger'
+      title: "Hurtig implementering",
+      description: "Løsninger der oftest kan implementeres på få uger",
     },
     {
       icon: <Shield size={24} />,
-      title: 'Høj sikkerhed',
-      description: 'GDPR-compliant med avanceret datasikkerhed og kryptering'
+      title: "Høj sikkerhed",
+      description: "GDPR-compliant med avanceret datasikkerhed og kryptering",
     },
     {
       icon: <Users size={24} />,
-      title: 'Support',
-      description: 'Dedikeret support team med dyb pensionsbranche-viden'
-    }
+      title: "Support",
+      description: "Dedikeret support team med dyb pensionsbranche-viden",
+    },
   ];
 
   return (
     <div className="loesninger-page">
-
       {/*
         <div className="benefits-section">
           <div className="container">
@@ -140,11 +142,16 @@ const Loesninger: React.FC = () => {
 
           <div className="solutions-grid">
             {solutions.map((solution) => (
-              <div key={solution.id} className={`solution-card ${solution.highlight ? 'highlighted' : ''}`}>
+              <div
+                key={solution.id}
+                className={`solution-card ${
+                  solution.highlight ? "highlighted" : ""
+                }`}
+              >
                 {solution.highlight && (
                   <div className="popular-badge">Mest Populære</div>
                 )}
-                
+
                 <div className="solution-content">
                   <div className="solution-header">
                     <div className="solution-icon">{solution.icon}</div>
@@ -174,7 +181,7 @@ const Loesninger: React.FC = () => {
                     <span className="price">{solution.pricing}</span>
                   </div>
                   <button className="cta-button">
-                    Læs Mere <ArrowRight size={16} />
+                    Læs mere <ArrowRight size={16} />
                   </button>
                 </div>
               </div>
@@ -188,8 +195,8 @@ const Loesninger: React.FC = () => {
           <div className="cta-content">
             <h2>Klar til at automatisere jeres pensionsprocesser?</h2>
             <p>
-              Kontakt Phinova for en uforpligtende demo og se hvordan vores 
-              AI-automatiseringsløsninger kan optimere jeres workflows og levere 
+              Kontakt Phinova for en uforpligtende demo og se hvordan vores
+              AI-automatiseringsløsninger kan optimere jeres workflows og levere
               exceptionelle kundeoplevelser gennem intelligent automatisering.
             </p>
             <div className="cta-buttons">
