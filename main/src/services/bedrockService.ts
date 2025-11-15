@@ -10,12 +10,13 @@ export interface BedrockConfig {
   modelId: string;
 }
 
-export interface LetterSummary {
+export interface DocumentSummary {
   summary: string;
   keyPoints: string[];
   actionItems: string[];
   pensionAmount?: string;
   paymentDate?: string;
+  documentType?: string;
 }
 
 class BedrockService {
@@ -33,20 +34,26 @@ class BedrockService {
     this.modelId = config.modelId;
   }
 
-  async interpretPensionLetter(letterContent: string): Promise<LetterSummary> {
+  async interpretPensionDocument(
+    documentContent: string,
+    fileName?: string
+  ): Promise<DocumentSummary> {
     try {
-      const prompt = `Du er en dansk pensionsekspert. Analyser følgende pensionsbrev og giv et klart, forståeligt sammendrag på dansk. 
+      const prompt = `Du er en dansk pensionsekspert. Analyser følgende pensionsdokument og giv et klart, forståeligt sammendrag på dansk. Dette kan være et pensionsbrev, årsopgørelse, policedokument, eller anden pensionsrelateret dokumentation.
 
-Pensionsbrev:
-${letterContent}
+${fileName ? `Filnavn: ${fileName}` : ""}
+
+Pensionsdokument:
+${documentContent}
 
 Giv venligst et svar i følgende JSON format:
 {
-  "summary": "Et kort sammendrag af brevet på dansk i almindelige ord",
-  "keyPoints": ["Vigtige punkter fra brevet"],
+  "summary": "Et kort sammendrag af dokumentet på dansk i almindelige ord",
+  "keyPoints": ["Vigtige punkter fra dokumentet"],
   "actionItems": ["Handlinger som pensionisten skal tage"],
   "pensionAmount": "Pensionsbeløb hvis nævnt",
-  "paymentDate": "Udbetalingsdato hvis nævnt"
+  "paymentDate": "Udbetalingsdato hvis nævnt",
+  "documentType": "Type af dokument (f.eks. 'Pensionsbrev', 'Årsopgørelse', 'Police', 'E-mail')"
 }
 
 Svar kun med JSON uden ekstra tekst.`;
@@ -85,8 +92,17 @@ Svar kun med JSON uden ekstra tekst.`;
       }
     } catch (error) {
       console.error("Fejl ved AI-analyse:", error);
-      throw new Error("Kunne ikke analysere pensionsbrevet. Prøv igen senere.");
+      throw new Error(
+        "Kunne ikke analysere pensionsdokumentet. Prøv igen senere."
+      );
     }
+  }
+
+  // Keep the old method for backward compatibility
+  async interpretPensionLetter(
+    letterContent: string
+  ): Promise<DocumentSummary> {
+    return this.interpretPensionDocument(letterContent);
   }
 }
 

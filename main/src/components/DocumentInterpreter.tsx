@@ -1,31 +1,50 @@
 import React, { useState } from 'react';
-import { Upload, FileText, AlertCircle, CheckCircle2, Loader2 } from 'lucide-react';
-import BedrockService, { type LetterSummary, type BedrockConfig } from '../services/bedrockService';
+import { Upload, FileText, AlertCircle, CheckCircle2, Loader2, File } from 'lucide-react';
+import BedrockService, { type DocumentSummary, type BedrockConfig } from '../services/bedrockService';
 
-const LetterInterpreter: React.FC = () => {
-  const [letterContent, setLetterContent] = useState<string>('');
+const DocumentInterpreter: React.FC = () => {
+  const [documentContent, setDocumentContent] = useState<string>('');
+  const [fileName, setFileName] = useState<string>('');
   const [isAnalyzing, setIsAnalyzing] = useState<boolean>(false);
-  const [analysis, setAnalysis] = useState<LetterSummary | null>(null);
+  const [analysis, setAnalysis] = useState<DocumentSummary | null>(null);
   const [error, setError] = useState<string | null>(null);
 
-  const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
-    if (file && file.type === 'text/plain') {
+    if (!file) return;
+
+    setFileName(file.name);
+    setError(null);
+
+    // Handle different file types
+    if (file.type === 'text/plain' || file.name.endsWith('.txt')) {
       const reader = new FileReader();
       reader.onload = (e) => {
         const content = e.target?.result as string;
-        setLetterContent(content);
-        setError(null);
+        setDocumentContent(content);
+      };
+      reader.readAsText(file);
+    } else if (file.type === 'application/pdf' || file.name.endsWith('.pdf')) {
+      // For now, show message about PDF support - can be enhanced with PDF parsing library
+      setError('PDF support kommer snart. Upload venligst en tekstfil eller kopier teksten manuelt.');
+    } else if (file.type.startsWith('text/') || 
+               file.name.endsWith('.eml') || 
+               file.name.endsWith('.msg')) {
+      // Handle email files and other text-based files
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const content = e.target?.result as string;
+        setDocumentContent(content);
       };
       reader.readAsText(file);
     } else {
-      setError('Vælg venligst en tekstfil (.txt)');
+      setError('Understøttede filtyper: .txt, .pdf (kommer snart), .eml, eller kopier teksten direkte');
     }
   };
 
-  const analyzeLetter = async () => {
-    if (!letterContent.trim()) {
-      setError('Indtast eller upload venligst dit pensionsbrev');
+  const analyzeDocument = async () => {
+    if (!documentContent.trim()) {
+      setError('Indtast eller upload venligst dit pensionsdokument');
       return;
     }
 
@@ -46,7 +65,7 @@ const LetterInterpreter: React.FC = () => {
       setError(null);
       
       const bedrockService = new BedrockService(config);
-      const result = await bedrockService.interpretPensionLetter(letterContent);
+      const result = await bedrockService.interpretPensionDocument(documentContent, fileName);
       
       setAnalysis(result);
     } catch (err) {
@@ -56,52 +75,67 @@ const LetterInterpreter: React.FC = () => {
     }
   };
 
+  const clearDocument = () => {
+    setDocumentContent('');
+    setFileName('');
+    setAnalysis(null);
+    setError(null);
+  };
+
   return (
     <div className="letter-interpreter">
       <div className="interpreter-header">
-        <FileText className="header-icon" />
-        <h2>Pensionsbrev Fortolker</h2>
-        <p>Upload eller indsæt dit pensionsbrev, og vores AI vil forklare det i almindelige ord</p>
+        <File className="header-icon" />
+        <h2>Pensionsdokument</h2>
+        <p>Upload eller indsæt dit pensionsdokument, og vores AI vil forklare det i almindelige ord</p>
+        <p className="file-types">Understøtter: Pensionsbreve, årsopgørelser, policer, e-mails og mere</p>
       </div>
 
       <div className="input-section">
         <div className="upload-area">
           <label htmlFor="file-upload" className="upload-button">
             <Upload size={20} />
-            Upload Pensionsbrev (.txt)
+            Upload dokument
           </label>
           <input
             id="file-upload"
             type="file"
-            accept=".txt"
+            accept=".txt,.pdf,.eml,.msg,text/*"
             onChange={handleFileUpload}
             style={{ display: 'none' }}
           />
+          {fileName && (
+            <div className="uploaded-file">
+              <FileText size={16} />
+              <span>{fileName}</span>
+              <button onClick={clearDocument} className="clear-button">×</button>
+            </div>
+          )}
         </div>
 
         <div className="text-input-area">
-          <label htmlFor="letter-text">Eller indsæt teksten her:</label>
+          <label htmlFor="document-text">Eller indsæt teksten her:</label>
           <textarea
-            id="letter-text"
-            value={letterContent}
-            onChange={(e) => setLetterContent(e.target.value)}
-            placeholder="Indsæt teksten fra dit pensionsbrev her..."
+            id="document-text"
+            value={documentContent}
+            onChange={(e) => setDocumentContent(e.target.value)}
+            placeholder="Indsæt teksten fra dit pensionsdokument her... (pensionsbrev, årsopgørelse, e-mail, etc.)"
             rows={8}
           />
         </div>
 
         <button 
-          onClick={analyzeLetter}
-          disabled={isAnalyzing || !letterContent.trim()}
+          onClick={analyzeDocument}
+          disabled={isAnalyzing || !documentContent.trim()}
           className="analyze-button"
         >
           {isAnalyzing ? (
             <>
               <Loader2 className="spinning" size={20} />
-              Analyserer...
+              Analyserer dokument...
             </>
           ) : (
-            'Analyser Pensionsbrev'
+            'Analyser pensionsdokument'
           )}
         </button>
       </div>
@@ -118,6 +152,9 @@ const LetterInterpreter: React.FC = () => {
           <div className="result-header">
             <CheckCircle2 className="success-icon" />
             <h3>Analyse Resultater</h3>
+            {analysis.documentType && (
+              <span className="document-type-badge">{analysis.documentType}</span>
+            )}
           </div>
 
           <div className="summary-section">
@@ -127,7 +164,7 @@ const LetterInterpreter: React.FC = () => {
 
           {analysis.keyPoints.length > 0 && (
             <div className="key-points-section">
-              <h4>Vigtige Punkter</h4>
+              <h4>Vigtige punkter</h4>
               <ul>
                 {analysis.keyPoints.map((point, index) => (
                   <li key={index}>{point}</li>
@@ -168,4 +205,4 @@ const LetterInterpreter: React.FC = () => {
   );
 };
 
-export default LetterInterpreter;
+export default DocumentInterpreter;

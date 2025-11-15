@@ -1,0 +1,87 @@
+import { Mail, Phone, MapPin, Clock } from 'lucide-react';
+import '../App.css';
+
+function Kontakt() {
+  return (
+    <div className="page-container">
+      <div className="page-header">
+        <h1>Kontakt Phinova</h1>
+        <p>Vi er her for at hjælpe jer med spørgsmål om vores AI-automatiseringsløsninger til pensionsbranchen</p>
+      </div>
+
+      <div className="page-content">
+        <section className="contact-section">
+          <div className="contact-info">
+            <div className="contact-card">
+              <Mail size={32} className="contact-icon" />
+              <h3>E-mail</h3>
+              <p>salg@phinova.dk</p>
+              <p className="contact-detail">Vi svarer inden for 24 timer</p>
+            </div>
+
+            <div className="contact-card">
+              <Phone size={32} className="contact-icon" />
+              <h3>Telefon</h3>
+              <p>+45 12 34 56 78</p>
+              <p className="contact-detail">Mandag - Fredag: 9:00 - 17:00</p>
+            </div>
+
+            <div className="contact-card">
+              <MapPin size={32} className="contact-icon" />
+              <h3>Adresse</h3>
+              <p>Phinova Pension Solutions ApS<br />
+              Innovationsvej 1<br />
+              2100 København Ø</p>
+            </div>
+
+            <div className="contact-card">
+              <Clock size={32} className="contact-icon" />
+              <h3>Åbningstider</h3>
+              <p>Mandag - Fredag: 9:00 - 17:00<br />
+              Weekend: Lukket</p>
+              <p className="contact-detail">Vores AI-systemer kører 24/7</p>
+            </div>
+          </div>
+
+          <div className="contact-form-section">
+            <h3>Kontakt vores salgsteam</h3>
+            <form className="contact-form">
+              <div className="form-group">
+                <label htmlFor="name">Navn</label>
+                <input type="text" id="name" name="name" required />
+              </div>
+              
+              <div className="form-group">
+                <label htmlFor="email">E-mail</label>
+                <input type="email" id="email" name="email" required />
+              </div>
+              
+              <div className="form-group">
+                <label htmlFor="subject">Emne</label>
+                <select id="subject" name="subject" required>
+                  <option value="">Vælg emne</option>
+                  <option value="demo">Book demo</option>
+                  <option value="pricing">Priser og pakker</option>
+                  <option value="integration">Teknisk integration</option>
+                  <option value="solutions">AI-automatiseringsløsninger</option>
+                  <option value="other">Andet</option>
+                </select>
+              </div>
+              
+              <div className="form-group">
+                <label htmlFor="message">Besked</label>
+                <textarea id="message" name="message" rows={5} required></textarea>
+              </div>
+              
+              <button type="submit" className="submit-button">
+                Send besked
+              </button>
+            </form>
+          </div>
+        </section>
+      </div>
+    </div>
+  );
+}
+
+export default Kontakt;

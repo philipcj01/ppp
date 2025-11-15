@@ -1,10 +1,11 @@
 # PPP (Plug & Play Pension) - Danish Pension Sector AI Platform
 
-A modern React + Vite + TypeScript web application for the Danish pension sector that provides plug-and-play AI agent solutions. The platform integrates with AWS Bedrock to make complex pension letters understandable through intelligent AI interpretation.
+A modern React + Vite + TypeScript web application for the Danish pension sector that provides plug-and-play AI agent solutions. The platform integrates with AWS Bedrock to make complex pension documents understandable through intelligent AI interpretation.
 
 ## 🚀 Features
 
-- **Letter Interpreter AI**: Upload or paste pension letters and get clear, understandable summaries in Danish
+- **Document Interpreter AI**: Upload or paste pension documents (letters, annual statements, emails, etc.) and get clear, understandable summaries in Danish
+- **Multi-format Support**: Handles various document types including pension letters, annual reports, policy documents, and emails
 - **AWS Bedrock Integration**: Powered by Claude AI for accurate pension document analysis
 - **Modern UI/UX**: Clean, responsive design optimized for Danish users
 - **TypeScript**: Full type safety and excellent developer experience
@@ -63,40 +64,51 @@ A modern React + Vite + TypeScript web application for the Danish pension sector
 
 ## 🎯 Usage
 
-### Letter Interpreter
+### Document Interpreter
 
 1. Navigate to the AI Solutions section
-2. Either upload a `.txt` file or paste your pension letter content
-3. Click "Analyser Pensionsbrev" to get an AI-powered analysis
+2. Either upload a supported document file (.txt, .eml, .msg) or paste your pension document content
+3. Click "Analyser pensionsdokument" to get an AI-powered analysis
 4. View the summarized results in plain Danish
+
+**Supported Document Types:**
+
+- Pension letters (pensionsbreve)
+- Annual statements (årsopgørelser)
+- Policy documents (policer)
+- Email correspondence (e-mails)
+- General text files (.txt)
+- PDF support coming soon
 
 The AI will provide:
 
 - **Summary**: Clear explanation in everyday language
-- **Key Points**: Important information extracted from the letter
+- **Key Points**: Important information extracted from the document
 - **Action Items**: What you need to do next
 - **Important Details**: Pension amounts and payment dates (if mentioned)
+- **Document Type**: Automatic identification of document category
 
 ## 🏗️ Architecture
 
 ```
 src/
 ├── components/
-│   ├── Header.tsx          # Main navigation and branding
-│   └── LetterInterpreter.tsx # AI letter analysis component
+│   ├── Header.tsx             # Main navigation and branding
+│   └── DocumentInterpreter.tsx # AI document analysis component
 ├── services/
-│   └── bedrockService.ts   # AWS Bedrock integration
-├── App.tsx                 # Main application component
-├── App.css                 # Global styles and component styling
-└── main.tsx               # Application entry point
+│   └── bedrockService.ts      # AWS Bedrock integration
+├── App.tsx                    # Main application component
+├── App.css                    # Global styles and component styling
+└── main.tsx                  # Application entry point
 ```
 
 ## 🔒 Security Considerations
 
 - Environment variables are used for AWS credentials
 - Client-side AWS SDK implementation (consider server-side proxy for production)
-- Input validation for uploaded files
+- Input validation for uploaded files and document types
 - Error handling for API failures
+- File type validation to prevent malicious uploads
 
 ## 🚀 Deployment
 
@@ -114,6 +126,7 @@ npm run preview
 
 ## 🔮 Future AI Solutions (Coming Soon)
 
+- **PDF Document Support**: Full PDF parsing and analysis
 - **Pensionsberegner AI**: Calculate future pension payouts with AI
 - **Investeringsrådgiver AI**: Personalized investment advice based on pension profile
 - **Dokument Sammenligner**: Compare multiple pension documents
@@ -148,7 +161,8 @@ npm run preview
 
 2. **File Upload Issues**
 
-   - Only `.txt` files are supported
+   - Supported formats: `.txt`, `.eml`, `.msg`, and other text-based files
+   - PDF support coming soon
    - Ensure file content is valid text
    - Check file size limits
 
