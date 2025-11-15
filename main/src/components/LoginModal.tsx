@@ -87,7 +87,7 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose }) => {
 
           <div className="demo-credentials">
             <p>Demo login:</p>
-            <p><strong>Email:</strong> demo@phinova.dk</p>
+            <p><strong>Email:</strong> admin@phinova.dk</p>
             <p><strong>Adgangskode:</strong> demo123</p>
           </div>
         </form>

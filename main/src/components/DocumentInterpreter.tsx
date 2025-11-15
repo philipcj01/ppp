@@ -151,7 +151,7 @@ const DocumentInterpreter: React.FC = () => {
         <div className="analysis-results">
           <div className="result-header">
             <CheckCircle2 className="success-icon" />
-            <h3>Analyse Resultater</h3>
+            <h3>Analyse resultater</h3>
             {analysis.documentType && (
               <span className="document-type-badge">{analysis.documentType}</span>
             )}

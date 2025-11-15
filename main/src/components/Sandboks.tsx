@@ -40,15 +40,6 @@ const Sandboks: React.FC = () => {
 
   return (
     <main className="main-content sandboks-page">
-      <section className="hero-section">
-        <div className="hero-content">
-          <h1>AI-Løsninger Sandboks</h1>
-          <p>
-            Test og udforsk vores AI-automatiseringsløsninger i en interaktiv sandboks. 
-            Vælg en løsning fra dropdown menuen nedenfor for at se den i aktion.
-          </p>
-        </div>
-      </section>
 
       <section className="sandbox-controls">
         <div className="container">

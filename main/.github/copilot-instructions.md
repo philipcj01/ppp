@@ -4,7 +4,7 @@
 
 ## Project Overview
 
-This is a React + Vite + TypeScript web application for the Danish pension sector that provides plug-and-play AI agent solutions. The platform integrates with AWS Bedrock for AI capabilities.
+This is a React + Vite + TypeScript web application for the Danish pension sector that provides AI agent solutions. The platform integrates with AWS Bedrock for AI capabilities.
 
 ## Key Technologies
 

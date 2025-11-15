@@ -663,6 +663,8 @@ body {
   font-family: inherit;
   font-size: 1rem;
   transition: var(--transition);
+  background: white;
+  color: var(--text-primary);
 }
 
 .form-group input:focus,
@@ -671,11 +673,24 @@ body {
   outline: none;
   border-color: var(--primary-color);
   box-shadow: 0 0 0 3px rgba(0, 102, 204, 0.1);
+  background: white;
+  color: var(--text-primary);
+}
+
+.form-group input:disabled,
+.form-group select:disabled,
+.form-group textarea:disabled {
+  background: var(--secondary-color);
+  color: var(--text-secondary);
+  cursor: not-allowed;
+  opacity: 0.7;
 }
 
 .form-group textarea {
   resize: vertical;
   min-height: 120px;
+  background: white;
+  color: var(--text-primary);
 }
 
 .submit-button {
@@ -695,6 +710,39 @@ body {
   background: var(--primary-dark);
   transform: translateY(-2px);
   box-shadow: 0 4px 12px rgba(0, 102, 204, 0.3);
+}
+
+/* Input validation styles */
+.input-with-validation {
+  position: relative;
+  width: 100%; /* Ensure wrapper takes full width */
+}
+
+.input-with-validation input {
+  padding-right: 3rem; /* Make space for the checkmark icon */
+  width: 100%; /* Ensure input takes full width of wrapper */
+}
+
+.validation-checkmark {
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--success-color);
+  pointer-events: none;
+  opacity: 0;
+  animation: checkmarkFadeIn 0.3s ease-out forwards;
+}
+
+@keyframes checkmarkFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-50%) scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(-50%) scale(1);
+  }
 }
 
 /* Logo link styles */
@@ -1443,14 +1491,18 @@ body {
 @media (max-width: 768px) {
   .loesninger-page .hero-section {
     padding: 3rem 2rem;
+    background: linear-gradient(135deg, #f8fafc, #e2e8f0, #222, #444);
+    color: #222;
   }
   
   .loesninger-page .hero-content h1 {
     font-size: 2.5rem;
+    color: var(--text-primary);
   }
   
   .loesninger-page .hero-subtitle {
     font-size: 1.2rem;
+    color: var(--text-secondary);
   }
   
   .benefits-section {
@@ -1962,18 +2014,21 @@ body {
   font-family: inherit;
   transition: var(--transition);
   background: white;
+  color: var(--text-primary); /* Tilføjer eksplicit tekstfarve */
 }
 
 .login-form .form-group input:focus {
   outline: none;
   border-color: var(--primary-color);
   box-shadow: 0 0 0 3px rgba(0, 102, 204, 0.1);
+  color: var(--text-primary); /* Sikrer tekstfarve ved focus */
 }
 
 .login-form .form-group input:disabled {
   background: var(--secondary-color);
   cursor: not-allowed;
   opacity: 0.7;
+  color: var(--text-secondary); /* Tekstfarve for disabled tilstand */
 }
 
 .login-form .error-message {
@@ -2246,7 +2301,7 @@ body {
   position: relative;
   z-index: 2;
   flex: 1;
-  max-width: 600px;
+  max-width: 1000px; /* Increased from 600px to 800px for wider content */
   opacity: 0;
   transform: translateY(30px);
   transition: all 0.8s ease-out;
@@ -2309,10 +2364,11 @@ body {
 }
 
 .hero-description {
-  font-size: 1.3rem;
+  font-size: 1.4rem; /* Slightly increased from 1.3rem */
   color: var(--text-secondary);
   line-height: 1.7;
   margin-bottom: 3rem;
+  max-width: 1000px; /* Added explicit max-width for description */
 }
 
 .hero-actions {

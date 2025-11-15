@@ -53,11 +53,11 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     return new Promise((resolve) => {
       setTimeout(() => {
         // Demo credentials for testing
-        if (email === 'demo@phinova.dk' && password === 'demo123') {
+        if (email === 'admin@phinova.dk' && password === 'demo123') {
           const userData: User = {
             id: '1',
             email: email,
-            name: 'Demo Bruger'
+            name: 'admin'
           };
           setUser(userData);
           localStorage.setItem('phinova_user', JSON.stringify(userData));
